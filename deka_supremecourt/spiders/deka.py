@@ -83,16 +83,6 @@ class DekaSpider(Spider):
 
             yield dekaItem
 
-            # yield {
-            #     'title': title,
-            #     'content': content
-            # }
-
-        # contents = result.xpath('.//*[@class="modal modal-wide fade"]')
-        # contents.xpath('.//*[@class="modal-title"]/text()').extract_first()
-        # contents.xpath('.//*[@class="width-max end modal-header"]/h4/text()').extract_first()
-        # contents.xpath('.//*[@class="item show-display-left print_item_deka_no"]/label/text()').extract_first()
-        # contents.xpath('.//*[@class="item show-display-right print_item_litigant "]/ul/li').extract()
         abs_next_page_url = response.xpath('.//a[span[@class="glyphicon glyphicon-chevron-right"]]/@href').extract_first()
 
         if abs_next_page_url is not None:
