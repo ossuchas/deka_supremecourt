@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../TestImageCV/.idea/TestImageCV.iml" filepath="$PROJECT_DIR$/../TestImageCV/.idea/TestImageCV.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/deka_supremecourt.iml" filepath="$PROJECT_DIR$/.idea/deka_supremecourt.iml" />
     </modules>
   </component>
