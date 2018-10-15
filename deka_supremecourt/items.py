@@ -24,3 +24,35 @@ class DekaSupremecourtItem(Item):
         input_processor=MapCompose(remove_tags, remove_whitespace),
         output_processor=TakeFirst()
     )
+    plaintiff = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    defendent = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    quorum1 = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    quorum2 = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    quorum3 = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    federal_court = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    court_of_appeal = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )
+    law = Field(
+        input_processor=MapCompose(remove_tags, remove_whitespace),
+        output_processor=TakeFirst()
+    )

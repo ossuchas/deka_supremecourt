@@ -2,8 +2,21 @@
 from scrapy import Spider
 from scrapy import Request
 from scrapy.http import FormRequest
-from scrapy.loader import ItemLoader
 from deka_supremecourt.items import DekaSupremecourtItem
+from bs4 import BeautifulSoup
+
+
+def law_tag(html_doc):
+    soup = BeautifulSoup(html_doc, 'html.parser')
+    val = []
+    for tag in soup.find_all('li'):
+        text = tag.text.strip()
+        text = text.replace('\n\n', '')
+        val.append(text.strip())
+
+    law = ", ".join(val)
+    law = law.replace('\n', '')
+    return law
 
 
 class DekaSpider(Spider):
@@ -44,8 +57,29 @@ class DekaSpider(Spider):
             contents = result.xpath('.//*[@class="item_short_text content-detail"]/p/text()').extract()
             content = "".join(contents)
 
-            dekaItem['title'] = title
+            plaintiff = result.xpath('.//*[@class="item_litigant content-option"]/ul/li[1]/text()').extract_first()
+            defendent = result.xpath('.//*[@class="item_litigant content-option"]/ul/li[2]/text()').extract_first()
+
+            quorum1 = result.xpath('.//*[@class="item_judge content-option"]/ul/li[1]/text()').extract_first()
+            quorum2 = result.xpath('.//*[@class="item_judge content-option"]/ul/li[2]/text()').extract_first()
+            quorum3 = result.xpath('.//*[@class="item_judge content-option"]/ul/li[3]/text()').extract_first()
+
+            federal_court = result.xpath('.//*[@class="item_primarycourt content-option"]/ul/li[1]/text()').extract_first()
+            court_of_appeal = result.xpath('.//*[@class="item_primarycourt content-option"]/ul/li[2]/text()').extract_first()
+
+            law_html_doc = result.xpath('.//*[@class="item_law content-detail"]/ul').extract()
+            law = law_tag(law_html_doc[0])
+
+            dekaItem['title'] = title.strip()
             dekaItem['content'] = content
+            dekaItem['plaintiff'] = plaintiff.strip()
+            dekaItem['defendent'] = defendent.strip()
+            dekaItem['quorum1'] = quorum1.strip()
+            dekaItem['quorum2'] = quorum2.strip()
+            dekaItem['quorum3'] = quorum3.strip()
+            dekaItem['federal_court'] = federal_court
+            dekaItem['court_of_appeal'] = court_of_appeal
+            dekaItem['law'] = law
 
             yield dekaItem
 
@@ -63,3 +97,4 @@ class DekaSpider(Spider):
 
         if abs_next_page_url is not None:
             yield Request(abs_next_page_url, callback=self.parse_deka)
+
